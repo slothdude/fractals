@@ -1,6 +1,7 @@
 //What to do next: Make it so multiple fractals can be on the same page, select
 //which one you want. also maybe try setting the sides at the same time as the up and down
-
+var lineCount = 0;
+var pg;
 
 function setup() {
   createCanvas(window.innerWidth-20, window.innerHeight-20);
@@ -12,21 +13,26 @@ function setup() {
   colorSlider.position(50, height/2);
   colorSlider.style('width', '200px');
   colorSlider.style('rotate', 90);
-  // colorSlider.mouseMoved(() => {redraw()});
+  colorSlider.mouseMoved(() => {redraw()});
   depthSlider = createSlider(0, 10, 100, 1);
   depthSlider.position(width - 250, height/2);
   depthSlider.style('width', '200px');
   depthSlider.style('rotate', 90);
   depthSlider.style('margin-right', '50px');
-  // depthSlider.mouseMoved(() => {redraw()});
+  depthSlider.mouseMoved(() => {redraw()});
+  pg = createGraphics(height, height);
 }
 
 function draw() {
   // clear();
+  noLoop();
   background(10,10,10);
+  //makes original diamond
   recurse(0, height, 0, height);
+  //makes two diamonds in the sides
   recurse(height/4, height*3/4, height/4, height/2);
   recurse(-height/4, height*3/4, height/4, height/2);
+  console.log(lineCount);
 }
 
 recurse = (horo, bottom, top, curHeight) => {
@@ -39,8 +45,9 @@ recurse = (horo, bottom, top, curHeight) => {
 }
 
 //current way it works is by redrawing over the parts it doesnt need anymore
+//draws line from x,y xdist in x direction, xdist
 drawTriangle = (x, y, xdist, ydist, mult) => {
-  if(xdist < 1 || ydist < 1){
+  if(xdist < 20 || ydist < 20){
     return;
   }
   var color;
@@ -53,9 +60,9 @@ drawTriangle = (x, y, xdist, ydist, mult) => {
     stroke((x + color)*2 % 255, (y + color)*2 % 255, (x+color+y)*2 % 255);
   }
   var line1 = line(x,y,x-xdist, y+ydist*mult);
-
+  lineCount ++;
   var line2 = line(x,y,x+xdist, y+ydist*mult);
-
+  lineCount ++;
   drawTriangle(x-xdist, y+ydist*mult, xdist*0.5, ydist*0.5, mult);
   drawTriangle(x+xdist, y+ydist*mult, xdist*0.5, ydist*0.5, mult);
 }
