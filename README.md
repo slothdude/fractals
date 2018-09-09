@@ -23,7 +23,9 @@ Getting Around
 ==============
 
 To switch which fractal you are rendering, change the code in
-![index.html](./first-try/index.html).
+![index.html](./first-try/index.html). Like for example, you could change
+`<script src="./hexagon.js"></script>` to `<script src="./sketch.js"></script>` and
+that's all you need to do.
 ![sketch.js](./first-try/sketch.js) was my first try and is very slow, but you
 can control the color with the slider on the left and the fractal depth with the
 slider on the right.
