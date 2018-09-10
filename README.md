@@ -14,6 +14,8 @@ Overview
 
 A fractal is a shape that is the same when you zoom in on a specific part. In the
 hourglass part below, notice how the 2 sides are identical to the whole:
+
+
 ![fractal-demonstration](https://media.giphy.com/media/xBoMMLbTUP4i0EL9TK/giphy.gif)
 
 ![sketch.js](./first-try/sketch.js) was my first try and is very slow, but you
@@ -24,8 +26,7 @@ rendered in ![index.html](./first-try/index.html)
 Playing
 ==============
 
-To switch which fractal you are rendering, click the screen.
-*Note*: It's not animated, you control it with the mousewheel.
+To switch which fractal you are rendering, click the screen. Control fractal depth with the mousewheel.
 
 
 Future Plans
