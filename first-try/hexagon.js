@@ -1,9 +1,12 @@
 var pg;
 var dg;
 var depth = 0;
-var bend1 = 0.5;
-var bend2 = 0.5;
+var bend1 = 0.216;
+// var bend2 = 0.7;
 var currShape = "hexagon";
+var a = 0;
+var r = 50;
+var circleSpacing = 3;
 
 var setup = () => {
   createCanvas(window.innerWidth-20, window.innerHeight-20);
@@ -11,25 +14,50 @@ var setup = () => {
   noLoop();
   pg = createGraphics(width, height);
   dg = createGraphics(width, height);
+  sg = createGraphics(width, height);
 }
 
 var draw = () => {
   console.log(currShape);
   if(depth <= 0)
     return;
-  pg.background(10);
-  dg.background(10);
+
   if(currShape == "hexagon"){
+    pg.background(10);
     drawHex(height/6, width/2, height/2, depth);
     image(pg, 0, 0);
   }
   else if(currShape == "diamond"){
+    dg.background(10);
     //bottom
     drawTriangle(width/2, height, height/4, height/4, -1, depth);
     //top
     drawTriangle(width/2, 0, height/4, height/4, 1, depth);
     image(dg, 0, 0);
   }
+  else if(currShape == "spiral"){
+    sg.background(50);
+    drawSpiral(width/2, height/2, height);
+    image(sg, 0, 0);
+  }
+}
+
+drawSpiral = (x, y, width) => {
+  if(depth <= 0 || width < 2 ){
+    return;
+  }
+  sg.strokeWeight(2);
+  sg.fill(noise(x)*255, noise(y+10000)*255, noise(5*x+5*y+20000)*255);
+  sg.ellipse(x, y, width);
+  // a += 0.1;
+  // r += 1;
+  xChange = 0;
+  yChange = 0;//r * sin(a);
+  push();
+  // sg.translate(width / 2, height / 2);
+  sg.ellipse(x, y, width);
+  pop();
+  drawSpiral(x, y+ 3*depth, width - (6*depth));
 }
 
 //draws one triangle
@@ -93,7 +121,8 @@ var mouseClicked = () => {
   depth = 1;
   switch(currShape){
     case "hexagon": currShape = "diamond"; break;
-    case "diamond": currShape = "hexagon"; break;
+    case "diamond": currShape = "spiral"; break;
+    case "spiral": currShape = "hexagon"; break;
   }
   redraw();
 }
